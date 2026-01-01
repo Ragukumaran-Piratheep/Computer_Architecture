@@ -184,4 +184,52 @@ This program serves as a simple example to demonstrate how to:
 * Control the flow of a program using labels, jumps, and syscalls.
 
 It is a beginner-friendly example often used to understand basic assembly language operations such as memory addressing, system calls, and program flow.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+#Program to print a message
+.data
+string1: .asciiz "Name:  "
+string2: .asciiz "Mohanathas\n"
+string3: .asciiz "Address: "
+string4: .asciiz "Jaffna\n"
+string5: .asciiz "Age: "
+age: .word 20
+ 
+.text
+
+ 
+main:
+la $a0, string1 # load address of string to be printed into $a0
+ 
+li $v0, 4 # # code for printing string is 4
+syscall # call operating system to perform print operation
+
+la $a0, string2 # load address of string to be printed into $a0
+ 
+li $v0, 4 # # code for printing string is 4
+syscall # call operating system to perform print operation
+
+la $a0, string3 # load address of string to be printed into $a0
+ 
+li $v0, 4 # # code for printing string is 4
+syscall # call operating system to perform print operation
+
+la $a0, string4 # load address of string to be printed into $a0
+ 
+li $v0, 4 # # code for printing string is 4
+syscall # call operating system to perform print operation
+
+la $a0, string5 # load address of string to be printed into $a0
+ 
+li $v0, 4 # # code for printing string is 4
+syscall # call operating system to perform print operation
+
+lw $a0, age
+
+li $v0, 1
+syscall
+
+li $v0, 10
+syscall
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
