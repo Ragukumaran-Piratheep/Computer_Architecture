@@ -100,3 +100,88 @@ la $a0, string3 # load address of string to be printed into $a0
  
 li $v0, 4 # # code for printing string is 4
 syscall # call operating system to perform print operation
+
+This MIPS assembly code is designed to **print three different messages to the console** one after another. Here's how the program works and what each part does:
+
+### 1. **Data Section (.data)**:
+
+This section is used to store data like strings that the program will use. The program defines three strings:
+
+* `string1`: "Hello, this is my first Assembly Program\n"
+* `string2`: "Hello, this is my second assembly program\n"
+* `string3`: "Hello, this is my third assembly program\n"
+
+These strings will be printed one by one during the execution.
+
+```asm
+.data
+string1: .asciiz "Hello, this is my first Assembly Program\n"
+string2: .asciiz "Hello , this is my second assembly program\n"
+string3: .asciiz "Hello , this is my third assembly program\n"
+```
+
+### 2. **Text Section (.text)**:
+
+The text section is where the program's actual instructions are written. It contains the code that will be executed when the program runs.
+
+* `_start` is the entry point of the program, which is where the program begins execution.
+
+* **`jal main`**: This instruction jumps to the `main` label and begins executing the `main` function, which is responsible for printing the messages.
+
+* **`li $v0, 10` and `syscall`**: After calling `main`, the program calls a **syscall with code 10**. Syscall code 10 is used to **exit** the program, effectively stopping the simulation or program once it has printed all the messages.
+
+```asm
+.text
+.global _start
+_start:
+    jal main       # Jump to 'main' to print the messages
+    li $v0, 10     # Prepare to exit the program
+    syscall        # Exit the program
+```
+
+### 3. **Main Function (main)**:
+
+The `main` function does the actual work of printing the strings. Here's how it works:
+
+* **`la $a0, stringX`**: This instruction loads the **address** of the string into register `$a0`. The strings are stored in the **data section**, and we need to load their memory addresses before we can print them.
+
+* **`li $v0, 4`**: This loads the value **4** into register `$v0`, which is the **syscall code for printing a string** in MIPS.
+
+* **`syscall`**: This instruction executes the system call. In this case, since `$v0` contains 4 (the code for printing a string), the syscall will print the string whose address is in `$a0`.
+
+This process is repeated for each of the three strings (`string1`, `string2`, and `string3`).
+
+```asm
+main:
+    la $a0, string1  # Load address of string1
+    li $v0, 4        # Print string syscall code
+    syscall          # Print string1
+
+    la $a0, string2  # Load address of string2
+    li $v0, 4        # Print string syscall code
+    syscall          # Print string2
+
+    la $a0, string3  # Load address of string3
+    li $v0, 4        # Print string syscall code
+    syscall          # Print string3
+```
+
+### **Summary of the Program's Behavior**:
+
+* The program will first jump to the `main` function to print three messages:
+
+  * "Hello, this is my first Assembly Program"
+  * "Hello, this is my second assembly program"
+  * "Hello, this is my third assembly program"
+* After printing the three strings, the program will then **exit** by calling a syscall with code 10 (`syscall`), which terminates the simulation or the program.
+
+### **Purpose**:
+
+This program serves as a simple example to demonstrate how to:
+
+* Define and use strings in MIPS assembly.
+* Print strings to the console using syscalls.
+* Control the flow of a program using labels, jumps, and syscalls.
+
+It is a beginner-friendly example often used to understand basic assembly language operations such as memory addressing, system calls, and program flow.
+
